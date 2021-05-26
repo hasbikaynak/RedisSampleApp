@@ -1,18 +1,30 @@
 ﻿@page "/fetchdata"
 
+ 
 @using RedisSample.Data
+@using RedisSample.Extensions
+
 @inject WeatherForecastService ForecastService
+@inject IDistributedCache cache
 
 <h1>Weather forecast</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
+<button  class="btn btn-primary"  @onclick="LoadForecast">Load Forecast</button>  
+
+@if(forecasts is null && loadLocation == "") // if forecast is null and loadlocation is empty at the same time then do this...
+{
+    <p><em>Click the button to load the forecast</em></p>
+}
+else if (forecasts is null) //elseif just forecast is null then do this... 
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    <div class="h3 @isCacheData">@loadLocation</div> // this is gonna show us where is coming from our  data
+
     <table class="table">
         <thead>
             <tr>
@@ -39,8 +51,31 @@ else
 @code {
     private WeatherForecast[] forecasts;
 
-    protected override async Task OnInitializedAsync()
+    private string loadLocation = "";
+    private string isCacheData = "";
+    private async Task LoadForecast()
     {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        forecasts = null;
+        loadLocation = null;
+
+        string recordKey = "WeatherForecast_" + DateTime.Now.ToString("yyyyMMdd_hhmm"); // this is gonna create key
+
+        forecasts = await cache.GetRecordAsync<WeatherForecast[]>(recordKey); // this is going to look up the key.
+
+        if (forecasts is null) // we take the forecast 
+        {
+            forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+
+            loadLocation = $"Loaded from API at { DateTime.Now }"; // this is gonna tell us exactly when api is loaded
+            isCacheData = "";
+
+            await cache.SetRecordAsync(recordKey, forecasts); // forecasts to the cache based upon keys.
+        }
+        else
+        {
+            loadLocation = $"Loaded from the cache at { DateTime.Now }";
+            isCacheData = "text-danger";
+        }
     }
+
 }
