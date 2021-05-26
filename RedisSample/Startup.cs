@@ -32,8 +32,8 @@ namespace RedisSample
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = Configuration.GetConnectionString("Redis");
-                options.InstanceName = "RedisSample_";
+                options.Configuration = Configuration.GetConnectionString("Redis"); //our redis connection and caching item will be here
+                options.InstanceName = "RedisSample_"; // unique name
             });
         }
 
