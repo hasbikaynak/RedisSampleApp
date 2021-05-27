@@ -1,37 +1,72 @@
-## Welcome to GitHub Pages
+# RedisSampleApp
 
-You can use the [editor on GitHub](https://github.com/M-Hasbi/RedisSampleApp/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+In order to understand how is caching data using Redis and to use this logic in a bigger project, I am creating a sample app.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+1-)For setting up Redis in Docker. This code which is located below, is going to image the Redis.
 
-### Markdown
+![WhatsApp Image 2021-05-27 at 01 57 25](https://user-images.githubusercontent.com/73940626/119746028-c040b900-be8f-11eb-936d-f7012bbf0a5b.jpeg)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+2-)Here you can see the my Redis data.
 
-# Header 1
-## Header 2
-### Header 3
+![WhatsApp Image 2021-05-27 at 01 58 50](https://user-images.githubusercontent.com/73940626/119746120-fc741980-be8f-11eb-80d1-b8b1dfb0bbbd.jpeg)
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
+3-)Now I am talking directly to the cache, to the database
 
-**Bold** and _Italic_ and `Code` text
+![WhatsApp Image 2021-05-27 at 02 00 43](https://user-images.githubusercontent.com/73940626/119746175-23325000-be90-11eb-9f87-a4ca6541191c.jpeg)
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+4-)It response me that it's awake and working.
 
-### Jekyll Themes
+![WhatsApp Image 2021-05-27 at 02 01 10](https://user-images.githubusercontent.com/73940626/119746230-45c46900-be90-11eb-8a68-7dd5c5863a85.jpeg)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/M-Hasbi/RedisSampleApp/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+5-)This is what we get when we run our app
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+![image](https://user-images.githubusercontent.com/73940626/119743573-7903f980-be8a-11eb-9fb5-98b2c6fc8657.png)
+
+
+6-)This is the Fetch data side in our app
+
+![image](https://user-images.githubusercontent.com/73940626/119743631-9769f500-be8a-11eb-9723-17407ad34014.png)
+
+
+7-)When we click on Load Forecast button, it showes us to the "loading...".
+
+![image](https://user-images.githubusercontent.com/73940626/119743749-db5cfa00-be8a-11eb-80a5-e7ae2ca72b7b.png)
+
+
+8-)And then we get our requests
+
+![WhatsApp Image 2021-05-27 at 01 31 47](https://user-images.githubusercontent.com/73940626/119744255-e6645a00-be8b-11eb-9ff7-447668687a71.jpeg)
+
+
+9-)When we click on Load Forecast button second time we are caching our data. 
+
+![WhatsApp Image 2021-05-27 at 01 32 02](https://user-images.githubusercontent.com/73940626/119744323-0ac03680-be8c-11eb-99d9-fcf0cfb144a7.jpeg)
+
+
+10-)Let's go to the docker and see what we cache to the database.There is a key which given us right after the clicking on Load Forecast button.
+
+![WhatsApp Image 2021-05-27 at 01 32 29](https://user-images.githubusercontent.com/73940626/119744392-38a57b00-be8c-11eb-90ce-bf9c92c2f999.jpeg)
+
+
+11-)We type "hgetall" and then our key which is located in our database, it showes us to what this container contains in it. 
+
+![WhatsApp Image 2021-05-27 at 01 33 52](https://user-images.githubusercontent.com/73940626/119744538-85895180-be8c-11eb-8731-93fbf58d4ea0.jpeg)
+
+
+12-)It's going to disappear after sometime.
+
+![WhatsApp Image 2021-05-27 at 01 35 32](https://user-images.githubusercontent.com/73940626/119744711-dac56300-be8c-11eb-8720-76191303ec82.jpeg)
+
+
+13-)This is how we can exit from Redis that typing 2 times "exit" in a row. 
+
+![WhatsApp Image 2021-05-27 at 01 45 23](https://user-images.githubusercontent.com/73940626/119745276-17de2500-be8e-11eb-9cfc-a4f48d66a16b.jpeg)
+
+
+14-)This is how we can stop and remove existing repository.
+
+![WhatsApp Image 2021-05-27 at 01 48 27](https://user-images.githubusercontent.com/73940626/119745341-36dcb700-be8e-11eb-9b2f-6857506139cb.jpeg)
